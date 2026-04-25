@@ -1,0 +1,54 @@
+1. Summary
+After analyzing the Windows Firewall logs, suspicious network scanning activity was detected from a single source IP: 192.168.1.71 targeting the internal host 192.168.1.67.
+
+The behavior indicates a network reconnaissance (port scanning) attempt.
+
+---
+
+2. Suspicious Observations
+
+The following abnormal patterns were identified:
+
+- Multiple connection attempts from the same source IP (192.168.1.71)
+- Sequential scanning of common service ports such as:
+  - 135 (RPC)
+  - 139 (NetBIOS)
+  - 445 (SMB)
+  - 8000, 8089 (application ports)
+- High frequency of connections within short time intervals (same minute)
+- Repeated TCP SYN requests followed by DROP actions
+- Large number of ALLOW entries to SMB port (445), indicating service probing
+
+---
+
+3. Key Indicators of Attack
+
+- One-to-many port access pattern (single IP → multiple ports)
+- Rapid connection attempts within seconds
+- Repeated scanning behavior across SMB and system ports
+- Presence of DROP entries indicating blocked suspicious traffic
+
+---
+
+4. Attack Classification
+
+Based on log behavior, this activity is classified as:
+
+## Network Reconnaissance / Port Scanning Attack
+
+This is commonly used by attackers before exploitation to identify open services.
+
+---
+
+5. Affected Source IP
+
+Attacker IP: 192.168.1.71  
+Target IP: 192.168.1.67  
+
+---
+
+6. Conclusion
+
+The activity is consistent with automated scanning behavior similar to tools like Nmap. The scan attempts to discover open services on the target system.
+
+Immediate mitigation (firewall blocking) is recommended to prevent further reconnaissance attempts.
