@@ -1,0 +1,65 @@
+1. Title
+
+Network Reconnaissance Detection and Incident Response Report
+
+2. Executive Summary
+
+A network reconnaissance attack was detected on a Windows 11 system from a Kali Linux machine. The attacker performed port scanning behavior similar to Nmap. The activity was detected using Windows Firewall logs and successfully mitigated using a custom firewall rule.
+
+3. Environment Details
+Attacker Machine: Kali Linux
+Target Machine: Windows 11
+Network: Local LAN
+Tools Used:
+Nmap
+Windows Firewall Logging
+PowerShell
+4. Attack Description
+
+The attacker IP 192.168.1.71 targeted system 192.168.1.67 and performed port scanning.
+
+Observed behavior:
+
+Scanning multiple ports (135, 139, 445, 8000, 8089)
+Rapid connection attempts
+TCP SYN packets indicating scanning activity
+Repeated probing of SMB ports (445)
+
+This behavior indicates network reconnaissance activity.
+
+5. Detection Method
+
+Detection was performed using Windows Firewall logs:
+
+Path:
+%systemroot%\System32\LogFiles\Firewall\pfirewall.log
+
+Indicators:
+
+Multiple connections from same source IP
+Sequential port scanning pattern
+DROP and ALLOW log entries
+High frequency connection attempts
+6. Incident Timeline
+06:59:42 → Initial scan detected (DROP packets)
+06:59:43 → Ports 135, 139, 445 targeted
+07:00:11 → Additional scan attempts detected
+07:00:19 → High frequency scanning observed
+07:00:20 → ICMP traffic observed
+7. Incident Response
+
+A firewall rule named "blocked_kali" was created to block attacker IP 192.168.1.71.
+
+Actions:
+
+Block inbound traffic from attacker IP
+Stop further scanning attempts
+Contain reconnaissance activity
+8. Outcome
+Attack successfully detected
+Attacker IP blocked
+No further scanning activity observed
+System secured after mitigation
+9. Conclusion
+
+This project demonstrates a SOC workflow including detection, analysis, and incident response. The attack was successfully identified and contained using firewall rules after detecting reconnaissance behavior similar to Nmap scanning.
