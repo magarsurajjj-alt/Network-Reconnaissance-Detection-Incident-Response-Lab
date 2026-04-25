@@ -1,0 +1,33 @@
+Incident Response Action - Firewall Containment
+
+1. Action Taken
+A custom Windows Firewall rule was created to block suspicious traffic from the attacker machine (Kali Linux).
+
+---
+
+2. Rule Details
+
+- Rule Name: blocked_kali
+- Attacker IP: 192.168.1.71
+- Action: Block
+- Direction: Inbound
+- Scope: All traffic from attacker IP
+
+---
+
+3. Purpose of Action
+The rule was created to immediately stop ongoing network reconnaissance activity detected in Windows Firewall logs.
+
+The attacker was generating multiple connection attempts similar to port scanning behavior (Nmap-like activity).
+
+---
+
+4. Result
+After applying the firewall rule:
+- All incoming connections from the attacker IP were blocked
+- No further scan attempts were observed in logs
+
+---
+
+5. Conclusion
+This action successfully contained the reconnaissance attack and prevented further unauthorized network probing from the attacker system.
